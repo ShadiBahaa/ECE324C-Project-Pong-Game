@@ -1,6 +1,6 @@
 #include "../../LIB/STD_TYPES.h"
 #include "../../LIB/BIT_MATH.h"
-#include "../../../TM4C123GH6PMn.h"
+#include "../../TM4C123GH6PMn.h"
 #include "../../MCAL/GPIO/GPIO.h"
 #include "../../MCAL/SSI/SSI_int.h"
 #include "N5110_prv.h"
