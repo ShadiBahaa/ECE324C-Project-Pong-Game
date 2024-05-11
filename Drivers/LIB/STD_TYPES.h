@@ -1,10 +1,3 @@
-/*
- * STD_TYPES.h
- *
- *  Created on: May 17, 2022
- *      Author: Mostafa Abdallah
- */
-
 #ifndef LIB_STD_TYPES_H_
 #define LIB_STD_TYPES_H_
 
