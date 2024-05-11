@@ -1,10 +1,3 @@
-/*
- * BIT_MATH.h
- *
- *  Created on: May 17, 2022
- *      Author: Mostafa Abdallah
- */
-
 #ifndef LIB_BIT_MATH_H_
 #define LIB_BIT_MATH_H_
 
