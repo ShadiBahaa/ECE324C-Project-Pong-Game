@@ -135,6 +135,16 @@ void GPTM_VoidSetTimeOutRawInterruptCallBack(TIMERS_e Timer, TIMER_Counters_e Ti
 {
     Raw_Interrupt_CallBacks[Timer][Timer_Counter] = Ptr_To_Function;
 }
+void GPTM_VoidSetBusyWaitinMS(TIMERS_e Timer, TIMER_Counters_e Timer_Counter, TIMER_time_t Time_In_MS)
+{
+    GPTM_VoidSetTimerStatus(TIMER_DISABLED, Timer, Timer_Counter);
+    TIMER_Period_t TIMER_Period = TICKS_PER_SECOND * Time_In_MS / 1000 - 1;
+    GPTM_VoidSetTimerReloadValue(Timer, Timer_Counter, TIMER_Period);
+    GPTM_VoidSetTimerStatus(TIMER_ENABLED, Timer, Timer_Counter);
+    while ((GPTMS[Timer]->RIS & (1 << (Timer_Counter * 8))) == 0)
+        ;
+    GPTM_VoidClearTimerTimeOutRawInterrupt(Timer, Timer_Counter);
+}
 void Timer0A_Handler(void)
 {
     GPTM_VoidClearTimerTimeOutRawInterrupt(TIMER_0, COUNTER_A);
