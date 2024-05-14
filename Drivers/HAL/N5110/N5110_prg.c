@@ -7,6 +7,8 @@
 #include "N5110_cfg.h"
 #include "N5110_int.h"
 
+u8 G_u8N5110Pixels[N5110_SCREENH/8][N5110_SCREENW];
+
 static void HN5110_vWriteCommand(u8 A_u8Data){
 		while(MSSI_u8Check_Busy() == N5110_HIGH){}
 		WRT_BIT(N5110_PORT->DATA,N5110_DC_PIN,N5110_DC_COMMAND);
@@ -115,4 +117,26 @@ void HN5110_vDisplay2DImage(const u8 PA_u8Data[][N5110_SIZEOFCHAR],u8 A_u8length
 
 void HN5110_vHome(void){
 	HN5110_vSetCursor(0, 0);
+}
+
+void HN5110_vSetPixel(u8 A_u8Xpos,u8 A_u8Ypos, N5110_STATE_t A_enState){
+	WRT_BIT(G_u8N5110Pixels[A_u8Ypos/8][A_u8Xpos],A_u8Ypos%8,A_enState);
+}
+void HN5110_vDisplayBuffer(void){
+  u8 L_u8row_count = 0;
+  u8 L_u8Col_count = 0;
+  for(L_u8row_count=0; L_u8row_count<N5110_SCREENH/8; L_u8row_count+=1){
+	for(L_u8Col_count=0; L_u8Col_count<N5110_SCREENW; L_u8Col_count+=1){
+      HN5110_vWriteData(G_u8N5110Pixels[L_u8row_count][L_u8Col_count]);
+	}
+  }
+}
+void HN5110_vClearBuffer(void){
+  u8 L_u8row_count = 0;
+  u8 L_u8Col_count = 0;
+  for(L_u8row_count=0; L_u8row_count<N5110_SCREENH/8; L_u8row_count+=1){
+	for(L_u8Col_count=0; L_u8Col_count<N5110_SCREENW; L_u8Col_count+=1){
+    	HN5110_vWriteData(0);
+	}
+  }
 }
