@@ -5,6 +5,7 @@
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint32_t;
+#define NULL ((void *)0)
 
 // Return type for the GPIO functions
 typedef enum GPIO_Ret_e
@@ -64,6 +65,7 @@ typedef enum GPIO_Function_e
 	GPIO_FUNCTION_GPIO,
 	GPIO_FUNCTION_TIMER = PCTL_TIMER,
 	GPIO_FUNCTION_UART = PCTL_UART,
+	GPIO_FUNCTION_SSI = PCTL_SSI,
 	GPIO_FUNCTION_ADC = PCTL_ADC
 } GPIO_Function_t;
 
@@ -135,6 +137,9 @@ typedef struct GPIO_Configurations_s
 {
 	GPIO_PortConfigurations_t portsCfgs[MAX_PORT_NUMBER];
 } GPIO_Configurations_t;
+
+// GPIO interrupt handler function pointer
+typedef void (*GPIO_CallBack_t)(void);
 
 // Function prototypes
 // Initialize the GPIO module

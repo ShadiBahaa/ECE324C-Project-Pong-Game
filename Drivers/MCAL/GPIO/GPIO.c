@@ -11,6 +11,8 @@ GPIOA_Type *GPIO_PORTS[] = {
 
 extern GPIO_Configurations_t *GPIOCfgs;
 
+GPIO_CallBack_t InterruptHandlers[MAX_PORT_NUMBER][MAX_PIN_NUMBER];
+
 GPIO_Ret_t GPIO_Init()
 {
 	volatile unsigned long delay;
@@ -514,8 +516,408 @@ GPIO_Ret_t GPIO_RegisterInterruptHandler(GPIO_Port_t portNum, GPIO_Pin_t pinNum,
 	{
 		return GPIO_RET_ERROR;
 	}
-	// TODO: implement the interrupt handler registration
+	// register the interrupt handler
+	InterruptHandlers[portNum][pinNum] = handler;
 	return GPIO_RET_OK;
+}
+
+void GPIOPortA_Handler(void){
+	if (GPIO_GetInterruptStatus(GPIO_PORT_A, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_A, GPIO_PIN_0);
+		if (InterruptHandlers[GPIO_PORT_A][GPIO_PIN_0] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_A][GPIO_PIN_0]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_A, GPIO_PIN_1, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_A, GPIO_PIN_1);
+		if (InterruptHandlers[GPIO_PORT_A][GPIO_PIN_1] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_A][GPIO_PIN_1]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_A, GPIO_PIN_2, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_A, GPIO_PIN_2);
+		if (InterruptHandlers[GPIO_PORT_A][GPIO_PIN_2] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_A][GPIO_PIN_2]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_A, GPIO_PIN_3, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_A, GPIO_PIN_3);
+		if (InterruptHandlers[GPIO_PORT_A][GPIO_PIN_3] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_A][GPIO_PIN_3]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_A, GPIO_PIN_4, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_A, GPIO_PIN_4);
+		if (InterruptHandlers[GPIO_PORT_A][GPIO_PIN_4] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_A][GPIO_PIN_4]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_A, GPIO_PIN_5, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_A, GPIO_PIN_5);
+		if (InterruptHandlers[GPIO_PORT_A][GPIO_PIN_5] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_A][GPIO_PIN_5]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_A, GPIO_PIN_6, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_A, GPIO_PIN_6);
+		if (InterruptHandlers[GPIO_PORT_A][GPIO_PIN_6] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_A][GPIO_PIN_6]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_A, GPIO_PIN_7, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_A, GPIO_PIN_7);
+		if (InterruptHandlers[GPIO_PORT_A][GPIO_PIN_7] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_A][GPIO_PIN_7]();
+		}
+	}
+}
+
+void GPIOPortB_Handler(void){
+	if (GPIO_GetInterruptStatus(GPIO_PORT_B, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_B, GPIO_PIN_0);
+		if (InterruptHandlers[GPIO_PORT_B][GPIO_PIN_0] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_B][GPIO_PIN_0]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_B, GPIO_PIN_1, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_B, GPIO_PIN_1);
+		if (InterruptHandlers[GPIO_PORT_B][GPIO_PIN_1] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_B][GPIO_PIN_1]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_B, GPIO_PIN_2, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_B, GPIO_PIN_2);
+		if (InterruptHandlers[GPIO_PORT_B][GPIO_PIN_2] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_B][GPIO_PIN_2]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_B, GPIO_PIN_3, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_B, GPIO_PIN_3);
+		if (InterruptHandlers[GPIO_PORT_B][GPIO_PIN_3] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_B][GPIO_PIN_3]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_B, GPIO_PIN_4, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_B, GPIO_PIN_4);
+		if (InterruptHandlers[GPIO_PORT_B][GPIO_PIN_4] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_B][GPIO_PIN_4]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_B, GPIO_PIN_5, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_B, GPIO_PIN_5);
+		if (InterruptHandlers[GPIO_PORT_B][GPIO_PIN_5] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_B][GPIO_PIN_5]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_B, GPIO_PIN_6, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_B, GPIO_PIN_6);
+		if (InterruptHandlers[GPIO_PORT_B][GPIO_PIN_6] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_B][GPIO_PIN_6]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_B, GPIO_PIN_7, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_B, GPIO_PIN_7);
+		if (InterruptHandlers[GPIO_PORT_B][GPIO_PIN_7] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_B][GPIO_PIN_7]();
+		}
+	}
+}
+void GPIOPortC_Handler(void){
+	if (GPIO_GetInterruptStatus(GPIO_PORT_C, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_C, GPIO_PIN_0);
+		if (InterruptHandlers[GPIO_PORT_C][GPIO_PIN_0] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_C][GPIO_PIN_0]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_C, GPIO_PIN_1, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_C, GPIO_PIN_1);
+		if (InterruptHandlers[GPIO_PORT_C][GPIO_PIN_1] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_C][GPIO_PIN_1]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_C, GPIO_PIN_2, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_C, GPIO_PIN_2);
+		if (InterruptHandlers[GPIO_PORT_C][GPIO_PIN_2] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_C][GPIO_PIN_2]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_C, GPIO_PIN_3, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_C, GPIO_PIN_3);
+		if (InterruptHandlers[GPIO_PORT_C][GPIO_PIN_3] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_C][GPIO_PIN_3]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_C, GPIO_PIN_4, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_C, GPIO_PIN_4);
+		if (InterruptHandlers[GPIO_PORT_C][GPIO_PIN_4] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_C][GPIO_PIN_4]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_C, GPIO_PIN_5, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_C, GPIO_PIN_5);
+		if (InterruptHandlers[GPIO_PORT_C][GPIO_PIN_5] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_C][GPIO_PIN_5]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_C, GPIO_PIN_6, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_C, GPIO_PIN_6);
+		if (InterruptHandlers[GPIO_PORT_C][GPIO_PIN_6] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_C][GPIO_PIN_6]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_C, GPIO_PIN_7, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_C, GPIO_PIN_7);
+		if (InterruptHandlers[GPIO_PORT_C][GPIO_PIN_7] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_C][GPIO_PIN_7]();
+		}
+	}
+}
+void GPIOPortD_Handler(void){
+	if (GPIO_GetInterruptStatus(GPIO_PORT_D, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_D, GPIO_PIN_0);
+		if (InterruptHandlers[GPIO_PORT_D][GPIO_PIN_0] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_D][GPIO_PIN_0]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_D, GPIO_PIN_1, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_D, GPIO_PIN_1);
+		if (InterruptHandlers[GPIO_PORT_D][GPIO_PIN_1] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_D][GPIO_PIN_1]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_D, GPIO_PIN_2, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_D, GPIO_PIN_2);
+		if (InterruptHandlers[GPIO_PORT_D][GPIO_PIN_2] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_D][GPIO_PIN_2]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_D, GPIO_PIN_3, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_D, GPIO_PIN_3);
+		if (InterruptHandlers[GPIO_PORT_D][GPIO_PIN_3] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_D][GPIO_PIN_3]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_D, GPIO_PIN_4, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_D, GPIO_PIN_4);
+		if (InterruptHandlers[GPIO_PORT_D][GPIO_PIN_4] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_D][GPIO_PIN_4]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_D, GPIO_PIN_5, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_D, GPIO_PIN_5);
+		if (InterruptHandlers[GPIO_PORT_D][GPIO_PIN_5] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_D][GPIO_PIN_5]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_D, GPIO_PIN_6, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_D, GPIO_PIN_6);
+		if (InterruptHandlers[GPIO_PORT_D][GPIO_PIN_6] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_D][GPIO_PIN_6]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_D, GPIO_PIN_7, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_D, GPIO_PIN_7);
+		if (InterruptHandlers[GPIO_PORT_D][GPIO_PIN_7] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_D][GPIO_PIN_7]();
+		}
+	}
+}
+void GPIOPortE_Handler(void){
+	if (GPIO_GetInterruptStatus(GPIO_PORT_E, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_E, GPIO_PIN_0);
+		if (InterruptHandlers[GPIO_PORT_E][GPIO_PIN_0] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_E][GPIO_PIN_0]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_E, GPIO_PIN_1, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_E, GPIO_PIN_1);
+		if (InterruptHandlers[GPIO_PORT_E][GPIO_PIN_1] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_E][GPIO_PIN_1]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_E, GPIO_PIN_2, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_E, GPIO_PIN_2);
+		if (InterruptHandlers[GPIO_PORT_E][GPIO_PIN_2] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_E][GPIO_PIN_2]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_E, GPIO_PIN_3, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_E, GPIO_PIN_3);
+		if (InterruptHandlers[GPIO_PORT_E][GPIO_PIN_3] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_E][GPIO_PIN_3]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_E, GPIO_PIN_4, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_E, GPIO_PIN_4);
+		if (InterruptHandlers[GPIO_PORT_E][GPIO_PIN_4] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_E][GPIO_PIN_4]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_E, GPIO_PIN_5, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_E, GPIO_PIN_5);
+		if (InterruptHandlers[GPIO_PORT_E][GPIO_PIN_5] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_E][GPIO_PIN_5]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_E, GPIO_PIN_6, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_E, GPIO_PIN_6);
+		if (InterruptHandlers[GPIO_PORT_E][GPIO_PIN_6] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_E][GPIO_PIN_6]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_E, GPIO_PIN_7, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_E, GPIO_PIN_7);
+		if (InterruptHandlers[GPIO_PORT_E][GPIO_PIN_7] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_E][GPIO_PIN_7]();
+		}
+	}
+}
+void GPIOPortF_Handler(void){
+	if (GPIO_GetInterruptStatus(GPIO_PORT_F, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_F, GPIO_PIN_0);
+		if (InterruptHandlers[GPIO_PORT_F][GPIO_PIN_0] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_F][GPIO_PIN_0]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_F, GPIO_PIN_1, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_F, GPIO_PIN_1);
+		if (InterruptHandlers[GPIO_PORT_F][GPIO_PIN_1] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_F][GPIO_PIN_1]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_F, GPIO_PIN_2, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_F, GPIO_PIN_2);
+		if (InterruptHandlers[GPIO_PORT_F][GPIO_PIN_2] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_F][GPIO_PIN_2]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_F, GPIO_PIN_3, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_F, GPIO_PIN_3);
+		if (InterruptHandlers[GPIO_PORT_F][GPIO_PIN_3] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_F][GPIO_PIN_3]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_F, GPIO_PIN_4, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_F, GPIO_PIN_4);
+		if (InterruptHandlers[GPIO_PORT_F][GPIO_PIN_4] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_F][GPIO_PIN_4]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_F, GPIO_PIN_5, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_F, GPIO_PIN_5);
+		if (InterruptHandlers[GPIO_PORT_F][GPIO_PIN_5] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_F][GPIO_PIN_5]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_F, GPIO_PIN_6, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_F, GPIO_PIN_6);
+		if (InterruptHandlers[GPIO_PORT_F][GPIO_PIN_6] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_F][GPIO_PIN_6]();
+		}
+	}
+	if (GPIO_GetInterruptStatus(GPIO_PORT_F, GPIO_PIN_7, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
+	{
+		GPIO_ClearInterrupt(GPIO_PORT_F, GPIO_PIN_7);
+		if (InterruptHandlers[GPIO_PORT_F][GPIO_PIN_7] != NULL)
+		{
+			InterruptHandlers[GPIO_PORT_F][GPIO_PIN_7]();
+		}
+	}
+
 }
 
 GPIO_Ret_t GPIO_UnregisterInterruptHandler(GPIO_Port_t portNum, GPIO_Pin_t pinNum)
@@ -528,7 +930,8 @@ GPIO_Ret_t GPIO_UnregisterInterruptHandler(GPIO_Port_t portNum, GPIO_Pin_t pinNu
 	{
 		return GPIO_RET_ERROR;
 	}
-	// TODO: implement the interrupt handler unregistration
+	// unregister the interrupt handler
+	InterruptHandlers[portNum][pinNum] = NULL;
 	return GPIO_RET_OK;
 }
 
