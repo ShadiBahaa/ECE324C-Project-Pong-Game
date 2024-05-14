@@ -2,4 +2,5 @@
 #define MAX_PIN_NUMBER (8)
 #define PCTL_TIMER (0x7)
 #define PCTL_UART (0x1)
+#define PCTL_SSI (0x2)
 #define PCTL_ADC (0)
