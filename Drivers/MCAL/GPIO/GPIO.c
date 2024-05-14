@@ -1,4 +1,5 @@
 #include "GPIO.h"
+#include "LIB/STD_TYPES.h"
 #include "../../TM4C123GH6PMn.h"
 
 GPIOA_Type *GPIO_PORTS[] = {

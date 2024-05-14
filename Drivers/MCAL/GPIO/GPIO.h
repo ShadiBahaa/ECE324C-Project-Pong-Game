@@ -5,7 +5,6 @@
 
 typedef unsigned char uint8_t;
 typedef unsigned int uint32_t;
-#define NULL ((void *)0)
 
 // Return type for the GPIO functions
 typedef enum GPIO_Ret_e
