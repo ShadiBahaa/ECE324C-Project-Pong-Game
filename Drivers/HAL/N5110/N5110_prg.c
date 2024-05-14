@@ -1,6 +1,6 @@
 #include "../../LIB/STD_TYPES.h"
 #include "../../LIB/BIT_MATH.h"
-#include "../../TM4C123GH6PMn.h"
+#include "../../../TM4C123GH6PMn.h"
 #include "../../MCAL/GPIO/GPIO.h"
 #include "../../MCAL/SSI/SSI_int.h"
 #include "N5110_prv.h"
@@ -93,10 +93,10 @@ void HN5110_vClear(void){
 }
 
 void HN5110_vDrawFullImage(u8 *PA_u8Data){
-  u16 l_u8counter = 0;
+  u16 l_u16counter = 0;
 		HN5110_vHome();
-  for(l_u8counter=0; l_u8counter < N5110_SCREENW*N5110_SCREENH/8; l_u8counter+=1){
-    HN5110_vWriteData(PA_u8Data[l_u8counter]);
+  for(l_u16counter=0; l_u16counter < N5110_SCREENW*N5110_SCREENH/8; l_u16counter+=1){
+    HN5110_vWriteData(PA_u8Data[l_u16counter]);
   }
 }
 
@@ -131,12 +131,61 @@ void HN5110_vDisplayBuffer(void){
 	}
   }
 }
+void HN5110_vAddCharBuffer(u8 A_u8Xpos,u8 A_u8Ypos, u8 A_u8Data){
+	u8 L_u8count = 0;
+	u8 L_u8PixelCount = 0;
+	u8 L_u8PixelNum = 0;
+//	for(L_u8PixelCount = 0;L_u8PixelCount<8;L_u8PixelCount+=1){
+//		HN5110_vSetPixel(A_u8Xpos,A_u8Ypos+L_u8PixelCount,N5110_LOW);		
+//	}
+	for (L_u8count = 0;L_u8count<5;L_u8count+=1){
+			for(L_u8PixelCount = 0;L_u8PixelCount<8;L_u8PixelCount+=1){
+				L_u8PixelNum = GET_BIT(ASCII[A_u8Data - 0x20][L_u8count],L_u8PixelCount);
+				HN5110_vSetPixel(A_u8Xpos+L_u8count+1,A_u8Ypos+L_u8PixelCount,L_u8PixelNum);
+		}
+	}
+//	for(L_u8PixelCount = 0;L_u8PixelCount<8;L_u8PixelCount+=1){
+//		HN5110_vSetPixel(A_u8Xpos+7,A_u8Ypos+L_u8PixelCount,N5110_LOW);		
+//	}
+}
+void HN5110_vAddStringBuffer(u8 A_u8Xpos,u8 A_u8Ypos,u8 *PA_u8String){
+	u8 L_u8Counter = 0;
+	while(PA_u8String[L_u8Counter] != '\0')
+	{
+		HN5110_vAddCharBuffer(A_u8Xpos,A_u8Ypos,PA_u8String[L_u8Counter++]);
+		A_u8Xpos+=8;
+	}
+}
+
+void HN5110_vAddNumberBuffer(u8 A_u8Xpos,u8 A_u8Ypos,s32 A_s32Number){
+	u32 l_u32Number=1;
+	if(A_s32Number==0){
+		HN5110_vAddCharBuffer(A_u8Xpos,A_u8Ypos,'0');
+		A_u8Xpos+=7;
+	}
+	if(A_s32Number<0){
+		HN5110_vAddCharBuffer(A_u8Xpos,A_u8Ypos,'-');
+		A_u8Xpos+=7;
+		A_s32Number*=-1;
+	}
+	while(A_s32Number !=0){
+		l_u32Number= (l_u32Number*10)+(A_s32Number%10);
+		A_s32Number =A_s32Number/10;
+	}
+	while(l_u32Number!=1){
+		HN5110_vAddCharBuffer(A_u8Xpos,A_u8Ypos,(l_u32Number%10)+'0');
+		A_u8Xpos+=7;
+		l_u32Number=l_u32Number/10;
+	}
+}
+
 void HN5110_vClearBuffer(void){
   u8 L_u8row_count = 0;
   u8 L_u8Col_count = 0;
   for(L_u8row_count=0; L_u8row_count<N5110_SCREENH/8; L_u8row_count+=1){
-	for(L_u8Col_count=0; L_u8Col_count<N5110_SCREENW; L_u8Col_count+=1){
-    	HN5110_vWriteData(0);
-	}
+		for(L_u8Col_count=0; L_u8Col_count<N5110_SCREENW; L_u8Col_count+=1){
+			G_u8N5110Pixels[L_u8row_count][L_u8Col_count] = 0;
+		}
+		HN5110_vDisplayBuffer();
   }
 }

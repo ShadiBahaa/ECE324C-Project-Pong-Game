@@ -103,10 +103,6 @@ static const char ASCII[][5] = {
 };
 
 
-typedef enum N5110_STATE_e{
-	N5110_LOW,
-	N5110_HIGH
-}N5110_STATE_t;
 
 
 #define N5110_PORT 						  GPIOA
