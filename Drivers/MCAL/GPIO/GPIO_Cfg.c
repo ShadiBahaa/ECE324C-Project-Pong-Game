@@ -48,6 +48,28 @@ GPIO_Configurations_t configs = {
             .digitalAnalogSelect = GPIO_MODE_DIGITAL,
             .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
         }
+    },
+    .portsCfgs[GPIO_PORT_A] = {
+        .portState = GPIO_PORT_ENABLE,
+        .pinsCfgs[GPIO_PIN_7] = {
+            .pinState = GPIO_PIN_ENABLE,
+            .pinDirection = GPIO_DIR_OUTPUT,
+            .pinFunction = GPIO_FUNCTION_GPIO,
+            .pinStrength = GPIO_STRENGTH_2MA,
+            .padConfig = GPIO_PAD_CONFIG_WEAK_PULL_UP,
+            .digitalAnalogSelect = GPIO_MODE_DIGITAL,
+            .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
+        },
+        .pinsCfgs[GPIO_PIN_6] = {
+            .pinState = GPIO_PIN_ENABLE,
+            .pinDirection = GPIO_DIR_OUTPUT,
+            .pinFunction = GPIO_FUNCTION_GPIO,
+            .pinStrength = GPIO_STRENGTH_2MA,
+            .padConfig = GPIO_PAD_CONFIG_WEAK_PULL_UP,
+            .digitalAnalogSelect = GPIO_MODE_DIGITAL,
+            .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
+        },
+
     }
 };
 

@@ -7,6 +7,9 @@ typedef enum N5110_STATE_e{
 	N5110_HIGH
 }N5110_STATE_t;
 
+#define N5110_SCREENW									84
+#define N5110_SCREENH									48
+
 void HN5110_vInit(void);
 void HN5110_vPrintChar(u8 A_u8data);
 void HN5110_vPrintString(u8 *PA_u8String);

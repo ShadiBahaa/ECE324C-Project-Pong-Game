@@ -1,8 +1,6 @@
-#ifndef MCAL_NVIC_NVIC_CFG_H_
-#define MCAL_NVIC_NVIC_CFG_H_
+#ifndef HAL_N5110_N5110_CFG_H_
+#define HAL_N5110_N5110_CFG_H_
 
 
 
-
-
-#endif /* MCAL_NVIC_NVIC_CFG_H_ */
+#endif /* HAL_N5110_N5110_CFG_H_ */
