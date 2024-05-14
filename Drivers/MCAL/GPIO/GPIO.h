@@ -37,6 +37,13 @@ typedef enum GPIO_Pin_e
 	GPIO_PIN_7
 } GPIO_Pin_t;
 
+// GPIO pin status
+typedef enum GPIO_PinStatus_e
+{
+	GPIO_LOW,
+	GPIO_HIGH
+} GPIO_PinStatus_t;
+
 // GPIO port state enumeration
 typedef enum GPIO_PortState_e
 {
@@ -193,7 +200,7 @@ GPIO_Ret_t GPIO_RegisterInterruptHandler(GPIO_Port_t portNum, GPIO_Pin_t pinNum,
 GPIO_Ret_t GPIO_UnregisterInterruptHandler(GPIO_Port_t portNum, GPIO_Pin_t pinNum);
 
 // Write/Read the pin
-void GPIO_WritePin(GPIO_Port_t portNum, GPIO_Pin_t pinNum, uint8_t value);
-uint8_t GPIO_ReadPin(GPIO_Port_t portNum, GPIO_Pin_t pinNum);
+void GPIO_WritePin(GPIO_Port_t portNum, GPIO_Pin_t pinNum, GPIO_PinStatus_t status);
+GPIO_PinStatus_t GPIO_ReadPin(GPIO_Port_t portNum, GPIO_Pin_t pinNum);
 
 #endif // GPIO_H
