@@ -186,6 +186,5 @@ void HN5110_vClearBuffer(void){
 		for(L_u8Col_count=0; L_u8Col_count<N5110_SCREENW; L_u8Col_count+=1){
 			G_u8N5110Pixels[L_u8row_count][L_u8Col_count] = 0;
 		}
-		HN5110_vDisplayBuffer();
   }
 }
