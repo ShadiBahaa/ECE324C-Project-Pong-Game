@@ -144,6 +144,7 @@ typedef enum
 } TIMER_Time_Out_Interrupt_Status_e;
 
 typedef unsigned long int TIMER_Period_t;
+typedef unsigned long int TIMER_time_t;
 typedef unsigned long int TIMER_Prescalar_t;
 typedef void (*TIMER_CallBack_t)(void);
 
@@ -196,4 +197,5 @@ void GPTM_VoidSetTimerPrescalarValue(TIMERS_e Timer, TIMER_Counters_e Timer_Coun
 void GPTM_VoidClearTimerTimeOutRawInterrupt(TIMERS_e Timer, TIMER_Counters_e Timer_Counter);
 void GPTM_VoidSetTimerTimeOutRawInterruptStatus(TIMERS_e Timer, TIMER_Counters_e Timer_Counter, TIMER_Time_Out_Interrupt_Status_e TIMER_Time_Out_Interrupt_Status);
 void GPTM_VoidSetTimeOutRawInterruptCallBack(TIMERS_e Timer, TIMER_Counters_e Timer_Counter, TIMER_CallBack_t Ptr_To_Function);
+void GPTM_VoidSetBusyWaitinMS(TIMERS_e Timer, TIMER_Counters_e Timer_Counter, TIMER_time_t Time_In_MS);
 #endif

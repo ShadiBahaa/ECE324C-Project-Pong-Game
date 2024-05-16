@@ -51,12 +51,30 @@ GPIO_Configurations_t configs = {
     },
     .portsCfgs[GPIO_PORT_A] = {
         .portState = GPIO_PORT_ENABLE,
-        .pinsCfgs[GPIO_PIN_7] = {
+        .pinsCfgs[GPIO_PIN_2] = {
             .pinState = GPIO_PIN_ENABLE,
-            .pinDirection = GPIO_DIR_OUTPUT,
-            .pinFunction = GPIO_FUNCTION_GPIO,
+            .pinDirection = GPIO_DIR_INPUT,
+            .pinFunction = GPIO_FUNCTION_SSI,
             .pinStrength = GPIO_STRENGTH_2MA,
-            .padConfig = GPIO_PAD_CONFIG_WEAK_PULL_UP,
+            .padConfig = GPIO_PAD_CONFIG_STANDARD,
+            .digitalAnalogSelect = GPIO_MODE_DIGITAL,
+            .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
+        },
+        .pinsCfgs[GPIO_PIN_3] = {
+            .pinState = GPIO_PIN_ENABLE,
+            .pinDirection = GPIO_DIR_INPUT,
+            .pinFunction = GPIO_FUNCTION_SSI,
+            .pinStrength = GPIO_STRENGTH_2MA,
+            .padConfig = GPIO_PAD_CONFIG_STANDARD,
+            .digitalAnalogSelect = GPIO_MODE_DIGITAL,
+            .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
+        },
+        .pinsCfgs[GPIO_PIN_5] = {
+            .pinState = GPIO_PIN_ENABLE,
+            .pinDirection = GPIO_DIR_INPUT,
+            .pinFunction = GPIO_FUNCTION_SSI,
+            .pinStrength = GPIO_STRENGTH_2MA,
+            .padConfig = GPIO_PAD_CONFIG_STANDARD,
             .digitalAnalogSelect = GPIO_MODE_DIGITAL,
             .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
         },
@@ -65,7 +83,16 @@ GPIO_Configurations_t configs = {
             .pinDirection = GPIO_DIR_OUTPUT,
             .pinFunction = GPIO_FUNCTION_GPIO,
             .pinStrength = GPIO_STRENGTH_2MA,
-            .padConfig = GPIO_PAD_CONFIG_WEAK_PULL_UP,
+            .padConfig = GPIO_PAD_CONFIG_STANDARD,
+            .digitalAnalogSelect = GPIO_MODE_DIGITAL,
+            .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
+        },
+        .pinsCfgs[GPIO_PIN_7] = {
+            .pinState = GPIO_PIN_ENABLE,
+            .pinDirection = GPIO_DIR_OUTPUT,
+            .pinFunction = GPIO_FUNCTION_GPIO,
+            .pinStrength = GPIO_STRENGTH_2MA,
+            .padConfig = GPIO_PAD_CONFIG_STANDARD,
             .digitalAnalogSelect = GPIO_MODE_DIGITAL,
             .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
         },

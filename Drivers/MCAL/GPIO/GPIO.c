@@ -1,4 +1,5 @@
 #include "GPIO.h"
+#include "LIB/STD_TYPES.h"
 #include "../../TM4C123GH6PMn.h"
 
 GPIOA_Type *GPIO_PORTS[] = {
@@ -521,7 +522,8 @@ GPIO_Ret_t GPIO_RegisterInterruptHandler(GPIO_Port_t portNum, GPIO_Pin_t pinNum,
 	return GPIO_RET_OK;
 }
 
-void GPIOPortA_Handler(void){
+void GPIOPortA_Handler(void)
+{
 	if (GPIO_GetInterruptStatus(GPIO_PORT_A, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
 	{
 		GPIO_ClearInterrupt(GPIO_PORT_A, GPIO_PIN_0);
@@ -588,7 +590,8 @@ void GPIOPortA_Handler(void){
 	}
 }
 
-void GPIOPortB_Handler(void){
+void GPIOPortB_Handler(void)
+{
 	if (GPIO_GetInterruptStatus(GPIO_PORT_B, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
 	{
 		GPIO_ClearInterrupt(GPIO_PORT_B, GPIO_PIN_0);
@@ -654,7 +657,8 @@ void GPIOPortB_Handler(void){
 		}
 	}
 }
-void GPIOPortC_Handler(void){
+void GPIOPortC_Handler(void)
+{
 	if (GPIO_GetInterruptStatus(GPIO_PORT_C, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
 	{
 		GPIO_ClearInterrupt(GPIO_PORT_C, GPIO_PIN_0);
@@ -720,7 +724,8 @@ void GPIOPortC_Handler(void){
 		}
 	}
 }
-void GPIOPortD_Handler(void){
+void GPIOPortD_Handler(void)
+{
 	if (GPIO_GetInterruptStatus(GPIO_PORT_D, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
 	{
 		GPIO_ClearInterrupt(GPIO_PORT_D, GPIO_PIN_0);
@@ -786,7 +791,8 @@ void GPIOPortD_Handler(void){
 		}
 	}
 }
-void GPIOPortE_Handler(void){
+void GPIOPortE_Handler(void)
+{
 	if (GPIO_GetInterruptStatus(GPIO_PORT_E, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
 	{
 		GPIO_ClearInterrupt(GPIO_PORT_E, GPIO_PIN_0);
@@ -852,7 +858,8 @@ void GPIOPortE_Handler(void){
 		}
 	}
 }
-void GPIOPortF_Handler(void){
+void GPIOPortF_Handler(void)
+{
 	if (GPIO_GetInterruptStatus(GPIO_PORT_F, GPIO_PIN_0, 1) == GPIO_INTERRUPT_STATUS_OCCURRED)
 	{
 		GPIO_ClearInterrupt(GPIO_PORT_F, GPIO_PIN_0);
@@ -917,7 +924,6 @@ void GPIOPortF_Handler(void){
 			InterruptHandlers[GPIO_PORT_F][GPIO_PIN_7]();
 		}
 	}
-
 }
 
 GPIO_Ret_t GPIO_UnregisterInterruptHandler(GPIO_Port_t portNum, GPIO_Pin_t pinNum)
@@ -935,7 +941,7 @@ GPIO_Ret_t GPIO_UnregisterInterruptHandler(GPIO_Port_t portNum, GPIO_Pin_t pinNu
 	return GPIO_RET_OK;
 }
 
-void GPIO_WritePin(GPIO_Port_t portNum, GPIO_Pin_t pinNum, uint8_t value)
+void GPIO_WritePin(GPIO_Port_t portNum, GPIO_Pin_t pinNum, GPIO_PinStatus_t status)
 {
 	if (GPIOCfgs->portsCfgs[portNum].portState == GPIO_PORT_DISABLE)
 	{
@@ -945,17 +951,17 @@ void GPIO_WritePin(GPIO_Port_t portNum, GPIO_Pin_t pinNum, uint8_t value)
 	{
 		return;
 	}
-	if (value)
+	if (status == GPIO_HIGH)
 	{
 		GPIO_PORTS[portNum]->DATA |= (1 << pinNum);
 	}
-	else
+	else if (status == GPIO_LOW)
 	{
 		GPIO_PORTS[portNum]->DATA &= ~(1 << pinNum);
 	}
 }
 
-uint8_t GPIO_ReadPin(GPIO_Port_t portNum, GPIO_Pin_t pinNum)
+GPIO_PinStatus_t GPIO_ReadPin(GPIO_Port_t portNum, GPIO_Pin_t pinNum)
 {
 	if (GPIOCfgs->portsCfgs[portNum].portState == GPIO_PORT_DISABLE)
 	{
@@ -965,5 +971,9 @@ uint8_t GPIO_ReadPin(GPIO_Port_t portNum, GPIO_Pin_t pinNum)
 	{
 		return 0;
 	}
-	return (GPIO_PORTS[portNum]->DATA & (1 << pinNum)) >> pinNum;
+	if (GPIO_PORTS[portNum]->DATA & (1 << pinNum))
+	{
+		return GPIO_HIGH;
+	}
+	return GPIO_LOW;
 }
