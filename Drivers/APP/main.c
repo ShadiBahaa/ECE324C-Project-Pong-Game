@@ -333,7 +333,6 @@ u8 APP_u8CheckBallRectCollide(BALL_t* A_pBALL, PADDLE_t *A_pPaddle){
 
 void APP_voidRefreshIRQ(void){
     global_u8ElapsedTimeBeriod = 1;
-    MADC_vStartSampling();
 }
 
 u8 APP_u8GetNumLength(u8 A_u8Num){
