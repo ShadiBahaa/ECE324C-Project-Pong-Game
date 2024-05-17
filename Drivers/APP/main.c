@@ -146,7 +146,6 @@ void APP_voidPlay(void){
     {
         if(global_u8ElapsedTimeBeriod == 1){
             global_u8ElapsedTimeBeriod = 0;
-					UART_VoidSendStringBlocking(UART_0, "Hello\n\r");
             HN5110_vClearBuffer();
             APP_voidDrawFillCircle(local_Ball.xPos, local_Ball.yPos, BALLRADIUS);
             APP_voidDrawVLine(N5110_SCREENW / 2, 0, N5110_SCREENH - 1);
