@@ -146,6 +146,7 @@ void APP_voidPlay(void){
     {
         if(global_u8ElapsedTimeBeriod == 1){
             global_u8ElapsedTimeBeriod = 0;
+            GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_LOW);
             HN5110_vClearBuffer();
             APP_voidDrawFillCircle(local_Ball.xPos, local_Ball.yPos, BALLRADIUS);
             APP_voidDrawVLine(N5110_SCREENW / 2, 0, N5110_SCREENH - 1);
@@ -180,9 +181,13 @@ void APP_voidPlay(void){
 
             if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne) || APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
                 local_Ball.xSpeed *= -1;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
             }
 
-            if(local_Ball.yPos + BALLRADIUS >= N5110_SCREENH - 1 || local_Ball.yPos - BALLRADIUS <= 1) local_Ball.ySpeed *= -1;
+            if(local_Ball.yPos + BALLRADIUS >= N5110_SCREENH - 1 || local_Ball.yPos - BALLRADIUS <= 1){
+                local_Ball.ySpeed *= -1;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
+            }
 
             local_Ball.xPos += local_Ball.xSpeed;
             local_Ball.yPos += local_Ball.ySpeed;

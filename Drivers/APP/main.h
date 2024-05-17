@@ -17,6 +17,9 @@
 #define DOWN_PIN_PORT     GPIO_PORT_D
 #define DOWN_PIN_PIN      GPIO_PIN_2
 
+#define BUZZER_PORT				GPIO_PORT_D
+#define BUZZER_PIN				GPIO_PIN_3
+
 #define REFRESH_RATE_PERIODE        800000*3/2//(133333 * 5 - 1)
 
 typedef struct{

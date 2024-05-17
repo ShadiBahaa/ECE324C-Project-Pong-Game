@@ -144,6 +144,15 @@ GPIO_Configurations_t configs = {
             .digitalAnalogSelect = GPIO_MODE_DIGITAL,
             .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
         },
+        .pinsCfgs[GPIO_PIN_3] = {
+            .pinState = GPIO_PIN_ENABLE,
+            .pinDirection = GPIO_DIR_OUTPUT,
+            .pinFunction = GPIO_FUNCTION_GPIO,
+            .pinStrength = GPIO_STRENGTH_2MA,
+            .padConfig = GPIO_PAD_CONFIG_WEAK_PULL_UP,
+            .digitalAnalogSelect = GPIO_MODE_DIGITAL,
+            .interruptEvent =  GPIO_INTERRUPT_EVENT_NONE
+        },
     }
 
 
