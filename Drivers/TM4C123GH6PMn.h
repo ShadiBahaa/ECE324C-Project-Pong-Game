@@ -250,7 +250,7 @@ typedef struct {                                    /*!< GPIOA Structure        
   __IO uint32_t  SLR;                               /*!< GPIO Slew Rate Control Select                                         */
   __IO uint32_t  DEN;                               /*!< GPIO Digital Enable                                                   */
   __IO uint32_t  LOCK;                              /*!< GPIO Lock                                                             */
-  __I  uint32_t  CR;                                /*!< GPIO Commit                                                           */
+  __IO  uint32_t  CR;                                /*!< GPIO Commit                                                           */
   __IO uint32_t  AMSEL;                             /*!< GPIO Analog Mode Select                                               */
   __IO uint32_t  PCTL;                              /*!< GPIO Port Control                                                     */
   __IO uint32_t  ADCCTL;                            /*!< GPIO ADC Control                                                      */
