@@ -353,3 +353,7 @@ u8 APP_u8GetNumLength(u8 A_u8Num){
 void APP_voidUARTRQ(void){
     global_u8UARTBuffer = UART_UnsignedCharGetDataNonBlocking(UART_0);
 }
+
+u32 APP_u32Map(u32 A_u32In, u32 A_u32IMin, u32 A_u32IMax, u32 A_u32DMin, u32 A_u32DMax){
+	return ((((A_u32In - A_u32IMin)*(A_u32DMax - A_u32DMin))/(A_u32IMax - A_u32IMin)) + A_u32DMin);
+}

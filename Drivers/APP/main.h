@@ -45,5 +45,6 @@ u8 APP_u8CheckBallRectCollide(BALL_t* A_pBALL, PADDLE_t *A_pPaddle);
 void APP_voidRefreshIRQ(void);
 u8 APP_u8GetNumLength(u8 A_u8Num);
 void APP_voidUARTRQ(void);
+u32 APP_u32Map(u32 A_u32In, u32 A_u32IMin, u32 A_u32IMax, u32 A_u32DMin, u32 A_u32DMax);
 
 #endif
