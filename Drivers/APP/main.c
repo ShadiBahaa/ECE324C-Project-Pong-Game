@@ -25,7 +25,7 @@ int main(void){
 			
 	HN5110_vInit();
     UART_VoidInit(&UART_Config);
-    UART_VoidSetUARTInterruptCallBack(UART_0, APP_voidUARTRQ);
+    UART_VoidSetUARTInterruptCallBack(BLUETOOTH_UART_NO, APP_voidUARTRQ);
     GPTM_VoidInit(&GPTM_Config);
 	GPTM_VoidSetTimeOutRawInterruptCallBack(TIMER_2, COUNTER_A, APP_voidRefreshIRQ);
 	MNVIC_vEnableINTPeripheral(NVIC_TIMER2A);
@@ -333,6 +333,7 @@ u8 APP_u8CheckBallRectCollide(BALL_t* A_pBALL, PADDLE_t *A_pPaddle){
 
 void APP_voidRefreshIRQ(void){
     global_u8ElapsedTimeBeriod = 1;
+    MADC_vStartSampling();
 }
 
 u8 APP_u8GetNumLength(u8 A_u8Num){
@@ -351,9 +352,39 @@ u8 APP_u8GetNumLength(u8 A_u8Num){
 }
 
 void APP_voidUARTRQ(void){
-    global_u8UARTBuffer = UART_UnsignedCharGetDataNonBlocking(UART_0);
+    global_u8UARTBuffer = UART_UnsignedCharGetDataNonBlocking(BLUETOOTH_UART_NO);
 }
 
-u32 APP_u32Map(u32 A_u32In, u32 A_u32IMin, u32 A_u32IMax, u32 A_u32DMin, u32 A_u32DMax){
-	return ((((A_u32In - A_u32IMin)*(A_u32DMax - A_u32DMin))/(A_u32IMax - A_u32IMin)) + A_u32DMin);
+/*
+void HardFault_Handler(void){
+	UART_VoidSendStringBlocking(BLUETOOTH_UART_NO, "Hard Fault\n\r");
 }
+
+void BusFault_Handler(void){
+	UART_VoidSendStringBlocking(BLUETOOTH_UART_NO, "Bus Fault\n\r");
+	UART_VoidSendStringBlocking(BLUETOOTH_UART_NO, "Fault : ");
+	APP_voidPrintNumber(NVIC_FAULT_STAT_R);
+	UART_VoidSendStringBlocking(BLUETOOTH_UART_NO, "\n\rADDR : ");
+	APP_voidPrintNumber(NVIC_FAULT_ADDR_R);
+}
+
+
+void APP_voidPrintNumber(s32 A_s32Number){
+	u32 l_u32Number=1;
+	if(A_s32Number==0){
+		UART_VoidSendDataBlocking(BLUETOOTH_UART_NO, '0');
+	}
+	if(A_s32Number<0){
+		UART_VoidSendDataBlocking(BLUETOOTH_UART_NO, '-');
+		A_s32Number*=-1;
+	}
+	while(A_s32Number !=0){
+		l_u32Number= (l_u32Number*10)+(A_s32Number%10);
+		A_s32Number =A_s32Number/10;
+	}
+	while(l_u32Number!=1){
+		UART_VoidSendDataBlocking(BLUETOOTH_UART_NO, (l_u32Number%10)+'0');
+		l_u32Number=l_u32Number/10;
+	}
+}
+*/

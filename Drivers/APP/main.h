@@ -9,16 +9,18 @@
 #define PADDLE_SPEED_START  1
 
 #define OK_PIN_PORT     GPIO_PORT_D
-#define OK_PIN_PIN      GPIO_PIN_1
+#define OK_PIN_PIN      GPIO_PIN_3
 
 #define UP_PIN_PORT     GPIO_PORT_D
-#define UP_PIN_PIN      GPIO_PIN_0
+#define UP_PIN_PIN      GPIO_PIN_1
 
 #define DOWN_PIN_PORT     GPIO_PORT_D
 #define DOWN_PIN_PIN      GPIO_PIN_2
 
 #define BUZZER_PORT				GPIO_PORT_D
-#define BUZZER_PIN				GPIO_PIN_3
+#define BUZZER_PIN				GPIO_PIN_0
+
+#define BLUETOOTH_UART_NO   UART_2
 
 #define REFRESH_RATE_PERIODE        800000*3/2//(133333 * 5 - 1)
 
@@ -45,6 +47,5 @@ u8 APP_u8CheckBallRectCollide(BALL_t* A_pBALL, PADDLE_t *A_pPaddle);
 void APP_voidRefreshIRQ(void);
 u8 APP_u8GetNumLength(u8 A_u8Num);
 void APP_voidUARTRQ(void);
-u32 APP_u32Map(u32 A_u32In, u32 A_u32IMin, u32 A_u32IMax, u32 A_u32DMin, u32 A_u32DMax);
 
 #endif
