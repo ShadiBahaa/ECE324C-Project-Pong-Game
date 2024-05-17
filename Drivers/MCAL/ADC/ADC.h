@@ -8,10 +8,10 @@
 #define ADC_INT_BIT 2
 #define ADC_END_BIT 1
 #define ADC_CHANNEL_VAL 2
-#define ADC_CONTINIOUS_TRIGGER 0xF
+#define ADC_MANUAL_TRIGGER 0x0
 
 void MADC_vInit(void);
 u16 MADC_u16GetVal(void);
-
+void MADC_vStartSampling(void);
 
 #endif /* MCAL_ADC_ADC_PRV_H_ */
