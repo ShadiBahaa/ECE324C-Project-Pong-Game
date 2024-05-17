@@ -9,7 +9,7 @@ GPTM_Config_t GPTM_Config = {
             .TIMER_Status = TIMER_ENABLED,
             .TIMER_Periodicity = TIMER_PERIODIC_MODE,
             .TIMER_Counting_Direction = TIMER_COUNTING_DOWN,
-            .TIMER_Period = 8000000 - 1,
+            .TIMER_Period = 800000*3/2 -1,
             .TIMER_Prescalar = 0,
             .TIMER_Time_Out_Interrupt_Status = TIME_OUT_INT_ENABLED,
         }},
