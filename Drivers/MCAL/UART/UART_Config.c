@@ -3,7 +3,7 @@
 #include "UART_Interface.h"
 
 UART_Config_t UART_Config = {
-    .UARTS[0] = {
+    .UARTS[2] = {
         .UART_Clock_Status = UART_CLOCK_ENABLED,
         .UART_Enable_Status = UART_ENABLED,
         .UART_Integer_Baud_Rate_Divisor = 104,

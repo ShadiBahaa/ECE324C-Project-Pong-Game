@@ -21,27 +21,34 @@ u8 global_u8ElapsedTimeBeriod = 0;
 u8 global_u8UARTBuffer = 0;
 
 int main(void){
+    u8 local_u8Mode = 0;
 	GPIO_Init();
 			
 	HN5110_vInit();
     UART_VoidInit(&UART_Config);
-    UART_VoidSetUARTInterruptCallBack(UART_0, APP_voidUARTRQ);
+    UART_VoidSetUARTInterruptCallBack(BLUETOOTH_UART_NO, APP_voidUARTRQ);
     GPTM_VoidInit(&GPTM_Config);
 	GPTM_VoidSetTimeOutRawInterruptCallBack(TIMER_2, COUNTER_A, APP_voidRefreshIRQ);
 	MNVIC_vEnableINTPeripheral(NVIC_TIMER2A);
-	MNVIC_vEnableINTPeripheral(NVIC_UART0);
+	MNVIC_vEnableINTPeripheral(NVIC_UART2);
     while (1)
     {
-        APP_voidDisplayOpening();
-        APP_voidPlay();
+        local_u8Mode = APP_u8DisplayOpening();
+        if(local_u8Mode == 0){
+            APP_voidPlaySingle();
+        }else{
+            APP_voidPlayMulti();
+        }
     }
     
 }
 
-void APP_voidDisplayOpening(void){
+u8 APP_u8DisplayOpening(void){
     PADDLE_t local_PaddleOne, local_PaddleTwo;
     BALL_t local_Ball;
     u8 local_u8Itterator = 0;
+    u8 local_u8State = 0;
+    u8 local_u8MenuOption = 0;
 
     local_PaddleOne.xPos = 0;
     local_PaddleOne.yPos = (N5110_SCREENH / 2) - (PLAYERHIGHT / 2);
@@ -66,15 +73,36 @@ void APP_voidDisplayOpening(void){
             APP_voidDrawVLine(N5110_SCREENW / 2, 0, N5110_SCREENH - 1);
             APP_voidDrawFillRect(local_PaddleOne.xPos, local_PaddleOne.yPos, PLAYERWIDTH, PLAYERHIGHT);
             APP_voidDrawFillRect(local_PaddleTwo.xPos, local_PaddleTwo.yPos, PLAYERWIDTH, PLAYERHIGHT);
-            HN5110_vAddStringBuffer((N5110_SCREENW - 7 * 8) / 2, 15, "Press x");
-            
 
-            if(local_u8Itterator <= 15){
-                HN5110_vAddStringBuffer((N5110_SCREENW - 4 * 8) / 2, 25, "Play");
-                local_u8Itterator++;
+            if(local_u8State == 0){
+                HN5110_vAddStringBuffer((N5110_SCREENW - 7 * 8) / 2, 15, "Press x");
+                if(local_u8Itterator <= 15){
+                    HN5110_vAddStringBuffer((N5110_SCREENW - 4 * 8) / 2, 25, "Play");
+                    local_u8Itterator++;
+                }else{
+                    local_u8Itterator++;
+                    if(local_u8Itterator >= 30) local_u8Itterator = 0;
+                }
             }else{
-                local_u8Itterator++;
-                if(local_u8Itterator >= 30) local_u8Itterator = 0;
+                if(local_u8MenuOption == 0){
+                    if(local_u8Itterator <= 15){
+                        HN5110_vAddStringBuffer((N5110_SCREENW - 6 * 8) / 2, 15, "Single");
+                        local_u8Itterator++;
+                    }else{
+                        local_u8Itterator++;
+                        if(local_u8Itterator >= 30) local_u8Itterator = 0;
+                    }
+                    HN5110_vAddStringBuffer((N5110_SCREENW - 5 * 8) / 2, 25, "Multi");
+                }else{
+                    HN5110_vAddStringBuffer((N5110_SCREENW - 6 * 8) / 2, 15, "Single");
+                    if(local_u8Itterator <= 15){
+                        HN5110_vAddStringBuffer((N5110_SCREENW - 5 * 8) / 2, 25, "Multi");
+                        local_u8Itterator++;
+                    }else{
+                        local_u8Itterator++;
+                        if(local_u8Itterator >= 30) local_u8Itterator = 0;
+                    }
+                }
             }
             HN5110_vDisplayBuffer();
 
@@ -94,8 +122,12 @@ void APP_voidDisplayOpening(void){
                 }
             }
 
-            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne) || APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
-                local_Ball.xSpeed *= -1;
+            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne)){
+                local_Ball.xSpeed = BALL_X_SPEED_START;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
+            }else if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
+                local_Ball.xSpeed = -1 * BALL_X_SPEED_START;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
             }
 
             if(local_Ball.yPos + BALLRADIUS >= N5110_SCREENH - 1 || local_Ball.yPos - BALLRADIUS <= 1) local_Ball.ySpeed *= -1;
@@ -116,13 +148,30 @@ void APP_voidDisplayOpening(void){
             }
 
             if(GPIO_ReadPin(OK_PIN_PORT, OK_PIN_PIN) == GPIO_LOW){
-                break;
+                while (GPIO_ReadPin(OK_PIN_PORT, OK_PIN_PIN) == GPIO_LOW);
+                
+                if(local_u8State == 0){
+                    local_u8State = 1;
+                }else{
+                    break;
+                }
+            }
+
+            if(GPIO_ReadPin(UP_PIN_PORT, UP_PIN_PIN) == GPIO_LOW){
+                if(local_u8MenuOption != 0)
+                local_u8MenuOption--;
+            }
+            if(GPIO_ReadPin(DOWN_PIN_PORT, DOWN_PIN_PIN) == GPIO_LOW){
+                if(local_u8MenuOption != 1)
+                local_u8MenuOption++;
             }
         }
     }
+
+    return local_u8MenuOption;
 }
 
-void APP_voidPlay(void){
+void APP_voidPlayMulti(void){
     PADDLE_t local_PaddleOne, local_PaddleTwo;
     BALL_t local_Ball;
     u8 local_u8Player1Score = 0, local_u8Player2Score = 0;
@@ -171,16 +220,117 @@ void APP_voidPlay(void){
             local_u8Player2Input = global_u8UARTBuffer;
             if(local_u8Player2Input == 'w' || local_u8Player2Input == 'W'){
                 if(local_PaddleTwo.yPos > 0) local_PaddleTwo.yPos -= local_PaddleTwo.speed;
-							global_u8UARTBuffer = 0;
+				global_u8UARTBuffer = 0;
             }else if(local_u8Player2Input == 's' || local_u8Player2Input == 'S'){
                 if(local_PaddleTwo.yPos + PLAYERHIGHT < N5110_SCREENH) local_PaddleTwo.yPos += local_PaddleTwo.speed;
-							global_u8UARTBuffer = 0;
+				global_u8UARTBuffer = 0;
+            }
+            local_u8Player2Input = 0;
+
+            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne)){
+                local_Ball.xSpeed = BALL_X_SPEED_START;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
+            }else if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
+                local_Ball.xSpeed = -1 * BALL_X_SPEED_START;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
+            }
+
+            if(local_Ball.yPos + BALLRADIUS >= N5110_SCREENH - 1 || local_Ball.yPos - BALLRADIUS <= 1){
+                local_Ball.ySpeed *= -1;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
+            }
+
+            local_Ball.xPos += local_Ball.xSpeed;
+            local_Ball.yPos += local_Ball.ySpeed;
+
+            if(local_Ball.xPos - BALLRADIUS <= 0){
+                local_u8Player2Score++;
+                local_Ball.xPos = (N5110_SCREENW / 2);
+                local_Ball.yPos = (N5110_SCREENH / 2);
+                local_Ball.xSpeed = BALL_X_SPEED_START;
+                local_Ball.ySpeed = BALL_Y_SPEED_START;
+            }else if(local_Ball.xPos + BALLRADIUS >= N5110_SCREENW){
+                local_u8Player1Score++;
+                local_Ball.xPos = (N5110_SCREENW / 2);
+                local_Ball.yPos = (N5110_SCREENH / 2);
+                local_Ball.xSpeed = BALL_X_SPEED_START;
+                local_Ball.ySpeed = BALL_Y_SPEED_START;
+            }
+        }
+    }
+
+    if(local_u8Player1Score > local_u8Player2Score){
+        HN5110_vAddStringBuffer((N5110_SCREENW - 8 * 8) / 2, 15, "Player 1");
+        
+    }else{
+        HN5110_vAddStringBuffer((N5110_SCREENW - 8 * 8) / 2, 15, "Player 2");
+    }
+    HN5110_vAddStringBuffer((N5110_SCREENW - 4 * 8) / 2, 25, "Wins");
+    HN5110_vDisplayBuffer();
+    while (GPIO_ReadPin(OK_PIN_PORT, OK_PIN_PIN) == GPIO_HIGH);
+}
+
+void APP_voidPlaySingle(void){
+    PADDLE_t local_PaddleOne, local_PaddleTwo;
+    BALL_t local_Ball;
+    u8 local_u8Player1Score = 0, local_u8Player2Score = 0;
+    u8 local_u8Player2Input = 0;
+
+    local_PaddleOne.xPos = 0;
+    local_PaddleOne.yPos = (N5110_SCREENH / 2) - (PLAYERHIGHT / 2);
+    local_PaddleOne.speed = PADDLE_SPEED_START;
+
+    local_PaddleTwo.xPos = N5110_SCREENW - PLAYERWIDTH;
+    local_PaddleTwo.yPos = (N5110_SCREENH / 2) - (PLAYERHIGHT / 2);
+    local_PaddleTwo.speed = PADDLE_SPEED_START;
+
+    local_Ball.xPos = (N5110_SCREENW / 2);
+    local_Ball.yPos = (N5110_SCREENH / 2);
+    local_Ball.xSpeed = BALL_X_SPEED_START;
+    local_Ball.ySpeed = BALL_Y_SPEED_START;
+	  
+    GPTM_VoidSetTimerReloadValue(TIMER_2, COUNTER_A, REFRESH_RATE_PERIODE);
+    while (1)
+    {
+        if(global_u8ElapsedTimeBeriod == 1){
+            global_u8ElapsedTimeBeriod = 0;
+            GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_LOW);
+            HN5110_vClearBuffer();
+            APP_voidDrawFillCircle(local_Ball.xPos, local_Ball.yPos, BALLRADIUS);
+            APP_voidDrawVLine(N5110_SCREENW / 2, 0, N5110_SCREENH - 1);
+            APP_voidDrawFillRect(local_PaddleOne.xPos, local_PaddleOne.yPos, PLAYERWIDTH, PLAYERHIGHT);
+            APP_voidDrawFillRect(local_PaddleTwo.xPos, local_PaddleTwo.yPos, PLAYERWIDTH, PLAYERHIGHT);
+            HN5110_vAddNumberBuffer((N5110_SCREENW / 4) - APP_u8GetNumLength(local_u8Player1Score) * 4, 0, local_u8Player1Score);
+            HN5110_vAddNumberBuffer((N5110_SCREENW * 3 / 4) - APP_u8GetNumLength(local_u8Player2Score) * 4 , 0, local_u8Player2Score);
+
+            HN5110_vDisplayBuffer();
+
+            if(local_u8Player2Score == 15 || local_u8Player1Score == 15){
+                break;
+            }
+            if(GPIO_ReadPin(UP_PIN_PORT, UP_PIN_PIN) == GPIO_LOW){
+                if(local_PaddleOne.yPos > 0) local_PaddleOne.yPos -= local_PaddleOne.speed;
+            }else if(GPIO_ReadPin(DOWN_PIN_PORT, DOWN_PIN_PIN) == GPIO_LOW){
+                if(local_PaddleOne.yPos + PLAYERHIGHT < N5110_SCREENH) local_PaddleOne.yPos += local_PaddleOne.speed;
+            }
+
+            //Player 2
+						
+            if(local_Ball.xPos >= N5110_SCREENW / 2){
+                if(local_Ball.yPos > local_PaddleTwo.yPos + PLAYERHIGHT / 2){
+                    if(local_PaddleTwo.yPos + PLAYERHIGHT < N5110_SCREENH) local_PaddleTwo.yPos += local_PaddleTwo.speed;
+                }else if(local_Ball.yPos < local_PaddleTwo.yPos + PLAYERHIGHT / 2){
+                    if(local_PaddleTwo.yPos > 0) local_PaddleTwo.yPos -= local_PaddleTwo.speed;
+                }
             }
 
             local_u8Player2Input = 0;
 
-            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne) || APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
-                local_Ball.xSpeed *= -1;
+            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne)){
+                local_Ball.xSpeed = BALL_X_SPEED_START;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
+            }else if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
+                local_Ball.xSpeed = -1 * BALL_X_SPEED_START;
                 GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
             }
 
@@ -351,9 +501,39 @@ u8 APP_u8GetNumLength(u8 A_u8Num){
 }
 
 void APP_voidUARTRQ(void){
-    global_u8UARTBuffer = UART_UnsignedCharGetDataNonBlocking(UART_0);
+    global_u8UARTBuffer = UART_UnsignedCharGetDataNonBlocking(BLUETOOTH_UART_NO);
 }
 
-u32 APP_u32Map(u32 A_u32In, u32 A_u32IMin, u32 A_u32IMax, u32 A_u32DMin, u32 A_u32DMax){
-	return ((((A_u32In - A_u32IMin)*(A_u32DMax - A_u32DMin))/(A_u32IMax - A_u32IMin)) + A_u32DMin);
+/*
+void HardFault_Handler(void){
+	UART_VoidSendStringBlocking(BLUETOOTH_UART_NO, "Hard Fault\n\r");
 }
+
+void BusFault_Handler(void){
+	UART_VoidSendStringBlocking(BLUETOOTH_UART_NO, "Bus Fault\n\r");
+	UART_VoidSendStringBlocking(BLUETOOTH_UART_NO, "Fault : ");
+	APP_voidPrintNumber(NVIC_FAULT_STAT_R);
+	UART_VoidSendStringBlocking(BLUETOOTH_UART_NO, "\n\rADDR : ");
+	APP_voidPrintNumber(NVIC_FAULT_ADDR_R);
+}
+
+
+void APP_voidPrintNumber(s32 A_s32Number){
+	u32 l_u32Number=1;
+	if(A_s32Number==0){
+		UART_VoidSendDataBlocking(BLUETOOTH_UART_NO, '0');
+	}
+	if(A_s32Number<0){
+		UART_VoidSendDataBlocking(BLUETOOTH_UART_NO, '-');
+		A_s32Number*=-1;
+	}
+	while(A_s32Number !=0){
+		l_u32Number= (l_u32Number*10)+(A_s32Number%10);
+		A_s32Number =A_s32Number/10;
+	}
+	while(l_u32Number!=1){
+		UART_VoidSendDataBlocking(BLUETOOTH_UART_NO, (l_u32Number%10)+'0');
+		l_u32Number=l_u32Number/10;
+	}
+}
+*/
