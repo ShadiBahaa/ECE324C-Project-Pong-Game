@@ -122,8 +122,12 @@ u8 APP_u8DisplayOpening(void){
                 }
             }
 
-            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne) || APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
-                local_Ball.xSpeed *= -1;
+            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne)){
+                local_Ball.xSpeed = BALL_X_SPEED_START;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
+            }else if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
+                local_Ball.xSpeed = -1 * BALL_X_SPEED_START;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
             }
 
             if(local_Ball.yPos + BALLRADIUS >= N5110_SCREENH - 1 || local_Ball.yPos - BALLRADIUS <= 1) local_Ball.ySpeed *= -1;
@@ -216,16 +220,18 @@ void APP_voidPlayMulti(void){
             local_u8Player2Input = global_u8UARTBuffer;
             if(local_u8Player2Input == 'w' || local_u8Player2Input == 'W'){
                 if(local_PaddleTwo.yPos > 0) local_PaddleTwo.yPos -= local_PaddleTwo.speed;
-							global_u8UARTBuffer = 0;
+				global_u8UARTBuffer = 0;
             }else if(local_u8Player2Input == 's' || local_u8Player2Input == 'S'){
                 if(local_PaddleTwo.yPos + PLAYERHIGHT < N5110_SCREENH) local_PaddleTwo.yPos += local_PaddleTwo.speed;
-							global_u8UARTBuffer = 0;
+				global_u8UARTBuffer = 0;
             }
-
             local_u8Player2Input = 0;
 
-            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne) || APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
-                local_Ball.xSpeed *= -1;
+            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne)){
+                local_Ball.xSpeed = BALL_X_SPEED_START;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
+            }else if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
+                local_Ball.xSpeed = -1 * BALL_X_SPEED_START;
                 GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
             }
 
@@ -320,8 +326,11 @@ void APP_voidPlaySingle(void){
 
             local_u8Player2Input = 0;
 
-            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne) || APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
-                local_Ball.xSpeed *= -1;
+            if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleOne)){
+                local_Ball.xSpeed = BALL_X_SPEED_START;
+                GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
+            }else if(APP_u8CheckBallRectCollide(&local_Ball, &local_PaddleTwo)){
+                local_Ball.xSpeed = -1 * BALL_X_SPEED_START;
                 GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_HIGH);
             }
 
