@@ -37,8 +37,9 @@ typedef struct{
     s16 ySpeed;
 }BALL_t;
 
-void APP_voidDisplayOpening(void);
-void APP_voidPlay(void);
+u8 APP_u8DisplayOpening(void);
+void APP_voidPlayMulti(void);
+void APP_voidPlaySingle(void);
 void APP_voidDrawFillRect(s16 A_s16XPos, s16 A_s16YPos, u8 A_u8Width, u8 A_u8Hight);
 void APP_voidDrawFillCircle(s16 A_s16XPos, s16 A_s16YPos, s16 A_s16Radius);
 void APP_voidDrawCircle(s16 A_s16XPos, s16 A_s16YPos, s16 A_s16Radius);
