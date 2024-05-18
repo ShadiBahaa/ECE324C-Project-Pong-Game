@@ -30,7 +30,7 @@ int main(void){
     GPTM_VoidInit(&GPTM_Config);
 	GPTM_VoidSetTimeOutRawInterruptCallBack(TIMER_2, COUNTER_A, APP_voidRefreshIRQ);
 	MNVIC_vEnableINTPeripheral(NVIC_TIMER2A);
-	MNVIC_vEnableINTPeripheral(NVIC_UART2);
+	MNVIC_vEnableINTPeripheral(NVIC_UART0);
     while (1)
     {
         local_u8Mode = APP_u8DisplayOpening();
