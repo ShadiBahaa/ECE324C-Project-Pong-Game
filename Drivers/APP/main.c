@@ -68,6 +68,7 @@ u8 APP_u8DisplayOpening(void){
     {
         if(global_u8ElapsedTimeBeriod == 1){
             global_u8ElapsedTimeBeriod = 0;
+            GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_LOW);
             HN5110_vClearBuffer();
             APP_voidDrawFillCircle(local_Ball.xPos, local_Ball.yPos, BALLRADIUS);
             APP_voidDrawVLine(N5110_SCREENW / 2, 0, N5110_SCREENH - 1);
@@ -196,6 +197,8 @@ void APP_voidPlayMulti(void){
         if(global_u8ElapsedTimeBeriod == 1){
             global_u8ElapsedTimeBeriod = 0;
             GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_LOW);
+            GPIO_WritePin(LED_RED_PIN_PORT, LED_RED_PIN_PIN, GPIO_LOW);
+            GPIO_WritePin(LED_GREEN_PIN_PORT, LED_GREEN_PIN_PIN, GPIO_LOW);
             HN5110_vClearBuffer();
             APP_voidDrawFillCircle(local_Ball.xPos, local_Ball.yPos, BALLRADIUS);
             APP_voidDrawVLine(N5110_SCREENW / 2, 0, N5110_SCREENH - 1);
@@ -245,12 +248,14 @@ void APP_voidPlayMulti(void){
 
             if(local_Ball.xPos - BALLRADIUS <= 0){
                 local_u8Player2Score++;
+                GPIO_WritePin(LED_RED_PIN_PORT, LED_RED_PIN_PIN, GPIO_HIGH);
                 local_Ball.xPos = (N5110_SCREENW / 2);
                 local_Ball.yPos = (N5110_SCREENH / 2);
                 local_Ball.xSpeed = BALL_X_SPEED_START;
                 local_Ball.ySpeed = BALL_Y_SPEED_START;
             }else if(local_Ball.xPos + BALLRADIUS >= N5110_SCREENW){
                 local_u8Player1Score++;
+                GPIO_WritePin(LED_GREEN_PIN_PORT, LED_GREEN_PIN_PIN, GPIO_HIGH);
                 local_Ball.xPos = (N5110_SCREENW / 2);
                 local_Ball.yPos = (N5110_SCREENH / 2);
                 local_Ball.xSpeed = BALL_X_SPEED_START;
@@ -261,6 +266,7 @@ void APP_voidPlayMulti(void){
 
     if(local_u8Player1Score > local_u8Player2Score){
         HN5110_vAddStringBuffer((N5110_SCREENW - 8 * 8) / 2, 15, "Player 1");
+        
         
     }else{
         HN5110_vAddStringBuffer((N5110_SCREENW - 8 * 8) / 2, 15, "Player 2");
@@ -295,6 +301,8 @@ void APP_voidPlaySingle(void){
         if(global_u8ElapsedTimeBeriod == 1){
             global_u8ElapsedTimeBeriod = 0;
             GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_LOW);
+            GPIO_WritePin(LED_RED_PIN_PORT, LED_RED_PIN_PIN, GPIO_LOW);
+	        GPIO_WritePin(LED_GREEN_PIN_PORT, LED_GREEN_PIN_PIN, GPIO_LOW);
             HN5110_vClearBuffer();
             APP_voidDrawFillCircle(local_Ball.xPos, local_Ball.yPos, BALLRADIUS);
             APP_voidDrawVLine(N5110_SCREENW / 2, 0, N5110_SCREENH - 1);
@@ -344,12 +352,14 @@ void APP_voidPlaySingle(void){
 
             if(local_Ball.xPos - BALLRADIUS <= 0){
                 local_u8Player2Score++;
+                 GPIO_WritePin(LED_RED_PIN_PORT, LED_RED_PIN_PIN, GPIO_HIGH);
                 local_Ball.xPos = (N5110_SCREENW / 2);
                 local_Ball.yPos = (N5110_SCREENH / 2);
                 local_Ball.xSpeed = BALL_X_SPEED_START;
                 local_Ball.ySpeed = BALL_Y_SPEED_START;
             }else if(local_Ball.xPos + BALLRADIUS >= N5110_SCREENW){
                 local_u8Player1Score++;
+                GPIO_WritePin(LED_GREEN_PIN_PORT, LED_GREEN_PIN_PIN, GPIO_HIGH);
                 local_Ball.xPos = (N5110_SCREENW / 2);
                 local_Ball.yPos = (N5110_SCREENH / 2);
                 local_Ball.xSpeed = BALL_X_SPEED_START;

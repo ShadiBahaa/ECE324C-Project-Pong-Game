@@ -1,9 +1,3 @@
-/*
- * NVIC_prg.c
- *
- *  Created on: Aug 30, 2022
- *      Author: DELL
- */
 #include "../../LIB/STD_TYPES.h"
 
 #include "../../LIB/BIT_MATH.h"
