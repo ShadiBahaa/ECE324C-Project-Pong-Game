@@ -35,7 +35,7 @@ To set up the project locally, follow these steps:
     - For connections, check the configuartion files of the drivers and application layer.
     - Enjoy!
 
-## Usage and components:
+## Usage:
 Please check the PDF guide titled "Pong_Game" to know how to play the game, which software drivers we used, and how we implemented the logic. 
 
 ## Contributing:
@@ -47,7 +47,7 @@ Contributions are welcome! Please follow these steps to contribute:
     ```
 - Commit your changes:
     ```bash
-    git commit -m 'Add new feature').
+    git commit -m 'Add new feature'.
     ```
 - Push to the branch:
     ```bash
