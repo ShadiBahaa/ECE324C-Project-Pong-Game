@@ -40,20 +40,20 @@ Please check the PDF guide titled "Pong_Game" to know how to play the game, whic
 
 ## Contributing:
 Contributions are welcome! Please follow these steps to contribute:
-    - Fork the repository.
-    - Create a new branch:
+- Fork the repository.
+- Create a new branch:
     ```bash
     git checkout -b feature-branch
     ```
-    - Commit your changes:
+- Commit your changes:
     ```bash
     git commit -m 'Add new feature').
     ```
-    - Push to the branch:
+- Push to the branch:
     ```bash
     git push origin feature-branch
     ```
-    - Open a pull request.
+- Open a pull request.
 
 ## Acknowledgements:
 Thanks for my colleagues: Mostafa Shokry, Mostafa Abdullah, Eman Mohamed, and Marwan Mohamed for their efforts which made this project incredible!
